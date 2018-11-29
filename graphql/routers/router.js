@@ -1,14 +1,13 @@
 const express = require('express');
 const Router = express.Router();
-const fileHelper = require('../helpers/file');
+const upload = require('../helpers/file');
 
 Router.get('/', function(req, res) {
     res.render('Upload');
 });
 
-Router.post('/upload', async function(req, res){
-    const uploaded =  await fileHelper.upload(req, res);
-    console.log(uploaded)
+Router.post('/upload', upload.upload(), async function(req, res){
+    const uploaded =  await upload.upload();
     return res.redirect('/')
 });
 

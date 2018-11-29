@@ -27,30 +27,13 @@ class FileHelper {
         const self = this;
         const upload = multer({
             storage: this.setStorage(),
-            // limits: { fieldSize: 3000000 },
+            limits: { fieldSize: 3000000 },
             fileFilter: function(req, file, cb){
                 self.checkFileExt(file, cb);
             }
-        }).any();
-        return upload(req, res, err => {
-            if(err) {
-                console.log(err);
-            }else {
-                console.log("Image Uploaded Successfully!")
-            }
-        });;
+        }).single('myImage');
+        return upload;
         }
     }
-
-    /*
-(req, res, err => {
-            if(err) {
-                console.log(err);
-            }else {
-                console.log("Image Uploaded Successfully!")
-            }
-        });
-
-    */
 
 module.exports= new FileHelper();
