@@ -1,0 +1,7 @@
+mixin uploadFile()
+
+    body
+        h2 Upload File
+        form(action='/upload', method='POST', enctype='multipart/form-data')
+            input(name='myImage', type='file')
+            input(type='submit', value='upload')
