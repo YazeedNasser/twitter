@@ -2,14 +2,19 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
+// const playground = require('graphql-playground')
 const schema = require( './graphql/schema' );
 const Router = require( './graphql/routers/router' );
+const socket = require('socket.io');
 const app = express();
+
+
 
 app.use('/graphql' , graphqlHTTP({
     schema,
     graphiql: true
 }))
+
 
 app.set('view engine', 'pug');
 app.use(express.static(__dirname + '/public'));
@@ -25,6 +30,21 @@ mongoose.connection.once('open', function(){
 
 app.use('/', Router);
 
-app.listen( 3000 , function() {
+var server = app.listen( 3000 , function() {
     console.log( 'IT WORKS!!' )
 } )
+
+io = socket(server);
+
+io.on('connection', function(){
+    console.log('user connected', socket.id)
+
+    socket.on('chat', function(data){
+        io.sockets.emit('chat', data)
+    })
+
+    socket.on('typing', function(data){
+        socket.broadcast.emit('typing', data)
+    })
+})
+

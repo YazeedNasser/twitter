@@ -11,4 +11,7 @@ Router.post('/upload', upload.upload(), async function(req, res){
     return res.redirect('/')
 });
 
+Router.get('/chat', function(req, res){
+    res.render('Chat');
+})
 module.exports = Router;

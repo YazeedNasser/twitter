@@ -13,8 +13,9 @@ class UserController extends BaseController {
         return res;
     }
 
-    async getUser(UserID) {
-        let user = await User.findOne({_id: UserID})
+    async getUser(UserID, token) {
+        // var decode = jwt.decode(token);
+        let user = await User.findOne({_id: UserID}, decode)
         .populate('tweets')
         let res = this.respond( 'User is here',  [user]  );
         // console.log(res)
@@ -96,11 +97,17 @@ class UserController extends BaseController {
         let token =jwt.sign( payload, 'rrrr' )
         validEmail.token = token;
 
+        // var decode = jwt.decode(token);
+        // validEmail.decode = decode; 
+        // const bearer = token[UserID]
+        // console.log(bearer);
+
         return this.respond( 'sucessfully loggeed in ', [ validEmail ] );
         
     }
 
     async updateUser(args) {
+
         let update = await User.findOneAndUpdate( { _id: args.UserID }, {
             name: args.name,
             email: args.email,
