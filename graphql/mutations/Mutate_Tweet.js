@@ -13,14 +13,17 @@ const {
 
 module.exports = {
     type: TweetType,
+    name:"AddTweet",
     args:{
         body: { type: new GraphQLNonNull ( GraphQLString ) },
-        authorId: { type: new GraphQLNonNull ( GraphQLID ) }
     },
     async resolve(parent, args, req){
+        console.log('START OF FUNCTION')
         // let isLoggiedIn = await User.findById({_id: args.UserID})
         // console.log(isLoggiedIn, '>>>>>>>>>>>>>>>')
         let token = req && req.headers && req.headers.authorization
+
+        console.log(token, "RECEIVED TOKEN")
         if (!token) {
             let res = {
                 statusCode: 500,
@@ -29,6 +32,9 @@ module.exports = {
             return res
         }
         let payload = await jwt.decode(token)
+
+        console.log(payload, "THE PAYLOAD")
+
         if (!payload) {
             let res = {
                 statusCode: 500,
@@ -37,6 +43,8 @@ module.exports = {
             return res
         }
         let user = await User.findById(payload.id)
+
+        console.log(user, "USER IN DB")
         if (!user) {
             let res = {
                 statusCode: 500,
@@ -44,6 +52,10 @@ module.exports = {
             }
             return res
         }
+
+        args.authorId = user.id
+
+        console.log(args, "CREATING IN API")
         return await TweetController.addTweet( args );
     },
 

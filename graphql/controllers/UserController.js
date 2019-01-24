@@ -170,11 +170,11 @@ class UserController extends BaseController {
     }
 
     async homePage( args ) {
-        let user = await User.findById(args.id).populate('followers'
+        let user = await User.findById(args.id).populate('tweets'
         );
         // user.followers.push( args.UserID );
         // user.save();
-        console.log(user.following, user.following.length)
+        console.log(user, 'lllllllllllllllll')
         return this.respond('lllll', [user]);
 
     }

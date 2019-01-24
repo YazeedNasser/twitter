@@ -8,6 +8,7 @@ const {
 
 module.exports = {
     type: UserType,
+    name:'LOGIN',
     args: {
         email: { type: new GraphQLNonNull( GraphQLString ) },
         password: { type: new GraphQLNonNull( GraphQLString ) }

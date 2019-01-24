@@ -7,13 +7,9 @@ const schema = require( './graphql/schema' );
 const Router = require( './graphql/routers/router' );
 const socket = require('socket.io');
 const app = express();
+const cors = require('cors')
 
-
-
-app.use('/graphql' , graphqlHTTP({
-    schema,
-    graphiql: true
-}))
+app.use(cors({}))
 
 
 app.set('view engine', 'pug');
@@ -30,7 +26,12 @@ mongoose.connection.once('open', function(){
 
 app.use('/', Router);
 
-var server = app.listen( 3000 , function() {
+app.use('/graphql' , graphqlHTTP({
+    schema,
+    graphiql: true
+}))
+
+var server = app.listen( 4000 , function() {
     console.log( 'IT WORKS!!' )
 } )
 

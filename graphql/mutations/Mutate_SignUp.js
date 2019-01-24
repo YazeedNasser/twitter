@@ -8,12 +8,14 @@ const {
 
 module.exports = {
     type: UserType,
+    name: 'REGISTER',
     args: {
         name: { type: new GraphQLNonNull ( GraphQLString ) },
         email: { type: new GraphQLNonNull ( GraphQLString ) },
         password: { type: new GraphQLNonNull ( GraphQLString ) }
     },
     async resolve( parent , args ) {
+        console.log('kkkkkkkkkkkkkkkkkkkkkk')
         return await UserController.signUp( args ); 
     }
 }

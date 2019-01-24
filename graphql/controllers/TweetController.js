@@ -20,9 +20,9 @@ class TweetController extends BaseController {
     }
     
     async addTweet( args ){
+        console.log('55555555555555555')
         let rules= {
             body: 'required|string',
-            authorId: 'required|string'
         }
 
         let validator = new Validator( args, rules );
